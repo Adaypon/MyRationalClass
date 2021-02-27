@@ -156,11 +156,8 @@ void Rational::print() {
         << std::endl;
 	*/
 	
-    if(nan)
+    if (nan)
         std::cout << "<NAN>\n"
-		<< numerator
-        << "/"
-        << denumerator
         << std::endl;
     else
         std::cout 
