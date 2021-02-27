@@ -15,9 +15,7 @@ public:
     int numerator;
     int denumerator;
 
-    Rational();
-    Rational(int, int);
-    explicit Rational(int);
+    explicit Rational(int, int);
 	
     // конструктор копирования
 	Rational(const Rational&);

@@ -14,25 +14,14 @@ int lcm(int a, int b) {
 /**
  * Конструкторы
  */
- 
-Rational::Rational() {
-    numerator = 1;
-    denumerator = 1;
-}
 
-Rational::Rational(int x, int y) {
-    numerator = x;
-    denumerator = y;
-
+Rational::Rational(int x = 1, int y = 1)
+    : numerator(x), denumerator(y) 
+{
     // Если y равен 0, значит выполнили где-то
     // деление на 0
     // Выставим nan в true
     nan = (y == 0);
-}
-
-Rational::Rational(int x) {
-    numerator = x;
-    denumerator = 1;
 }
 
 Rational::Rational(const Rational& copy) {
@@ -178,32 +167,12 @@ int main() {
 	
     Rational x; // 1/1
     Rational y(10, 5); // 10/5
-    Rational z(7);
+    Rational z(7); // 7/1
+    Rational n(1, 0); // 1/0, nan
 	
-	x.print();
-	y.print();
-	z.print();
+    x.print();
+    y.print();
+    z.print();
 	
-    std::cout << "x.eq(y): ";
-    std::cout << x.eq(y) << std::endl;
-    std::cout << "x.neq(y): ";
-    std::cout << x.neq(y) << std::endl;
-    std::cout << "z.neg(): ";
-    z.neg().print();
-	std::cout << "z.inv(): ";
-    z.inv().print();
-	std::cout << std::endl;
-    
-	Rational n(10, 0);
-	n.print();
-    n.mul(Rational(1)).print();
-    Rational(1).mul(n).print();
-	std::cout << std::endl;
-	
-	std::cout << "Enter rational number z: ";
-	z.scan();
-	z.print();
-	z.sum(y).reduce().print();
-	z.print();
 	
 }
