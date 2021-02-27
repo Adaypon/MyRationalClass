@@ -14,6 +14,9 @@ public:
 	Rational& operator=(const Rational&);
 
     Rational operator+(const Rational&);
+    Rational operator-(const Rational&);
+    Rational operator*(const Rational&);
+    Rational operator/(const Rational&);
 
     // Сокращение
     Rational reduce();

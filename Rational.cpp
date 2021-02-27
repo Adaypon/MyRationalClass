@@ -42,6 +42,18 @@ Rational Rational::operator+(const Rational& other) {
     return this->sum(other);
 }
 
+Rational Rational::operator-(const Rational& other) {
+    return this->sub(other);
+}
+
+Rational Rational::operator*(const Rational& other) {
+    return this->mul(other);
+}
+
+Rational Rational::operator/(const Rational& other) {
+    return this->div(other);
+}
+
 
 // Сокращение
 Rational Rational::reduce() {
@@ -82,14 +94,14 @@ Rational Rational::inv() {
 
 Rational Rational::sum(Rational r) {
     if (checkNAN(*this, r)) {
-        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        std::cout << "sum Illegal operation: one of objects is NAN" << std::endl;
         return *this;
     }
 	int commonDenumerator = lcm(denumerator, r.denumerator); // общий знаменатель
 	return Rational(
 		numerator * (commonDenumerator / denumerator) + r.numerator * (commonDenumerator / r.denumerator),
 		commonDenumerator
-	).reduce(); // после сложения сокращаем число
+	);
 }
 
 Rational Rational::sub(Rational r) {
@@ -98,16 +110,22 @@ Rational Rational::sub(Rational r) {
 
 Rational Rational::mul(Rational r) {
     if (checkNAN(*this, r)) {
-        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        std::cout << "mul Illegal operation: one of objects is NAN" << std::endl;
         return *this;
     }
+    
 	return Rational(
 		numerator * r.numerator,
 		denumerator * r.denumerator
-	).reduce(); // после перемножения сокращаем число
+	);
 }
 
 Rational Rational::div(Rational r) {
+    
+    if (checkNAN(*this, r)) {
+        std::cout << "div Illegal operation: one of objects is NAN" << std::endl;
+        return *this;
+    }
 	return mul(r.inv());
 }
 
@@ -192,6 +210,7 @@ int main() {
     Rational y;
     x.scan();
     y.scan();
-    Rational c = x + y;
+    Rational c = x / y;
     c.print();
+    c.reduce().print();
 }
