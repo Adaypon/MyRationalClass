@@ -5,16 +5,6 @@
  */
 class Rational {
 public:
-    // not a number
-    // Указывает, что число не является числом
-    // по аналогии с float
-    // Устанавливается в true,
-    // если выполнили операцию
-    // с делением на ноль
-    bool nan = false;
-    int numerator;
-    int denumerator;
-
     explicit Rational(int, int);
 	
     // конструктор копирования
@@ -22,6 +12,8 @@ public:
 	
     // присваивание копирование
 	Rational& operator=(const Rational&);
+
+    Rational operator+(const Rational&);
 
     // Сокращение
     Rational reduce();
@@ -63,4 +55,15 @@ public:
     bool isNAN();
     // Проверка на NAN
     bool checkNAN(Rational, Rational);
+
+private:
+    // not a number
+    // Указывает, что число не является числом
+    // по аналогии с float
+    // Устанавливается в true,
+    // если выполнили операцию
+    // с делением на ноль
+    bool nan = false;
+    int numerator;
+    int denumerator;
 };

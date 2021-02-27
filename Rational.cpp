@@ -38,6 +38,10 @@ Rational& Rational::operator=(const Rational& other) {
 	return *this;
 }
 
+Rational Rational::operator+(const Rational& other) {
+    return this->sum(other);
+}
+
 
 // Сокращение
 Rational Rational::reduce() {
@@ -188,8 +192,6 @@ int main() {
     Rational y;
     x.scan();
     y.scan();
-    x.print();
-    x = x.inv();
-    x = x.sum(y);
-    x.print();
+    Rational c = x + y;
+    c.print();
 }
