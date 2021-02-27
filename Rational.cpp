@@ -84,7 +84,7 @@ Rational Rational::operator/(Rational& other) {
 
 bool Rational::operator==(const Rational& other) {
     if (checkNAN(*this, other)) {
-        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
         return false;
     }
     return
@@ -97,7 +97,7 @@ bool Rational::operator!=(const Rational& other) {
 
 bool Rational::operator<(const Rational& other) {
     if (checkNAN(*this, other)) {
-        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
         return false;
     }
     if (denumerator == other.denumerator) {
@@ -109,7 +109,7 @@ bool Rational::operator<(const Rational& other) {
 
 bool Rational::operator>(const Rational& other) {
     if (checkNAN(*this, other)) {
-        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
         return false;
     }
     if (denumerator == other.denumerator) {
