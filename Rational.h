@@ -32,29 +32,6 @@ public:
     Rational neg();
     // ^-1
     Rational inv();
-/*
-    Rational sum(Rational);
-    Rational sub(Rational);
-    Rational mul(Rational);
-    Rational div(Rational);
-
-    // ==
-    bool eq(Rational);
-    // !=
-    bool neq(Rational);
-    // less than
-    // <
-    bool lt(Rational);
-    // less or equal than
-    // <=
-    bool leq(Rational);
-    // greater than
-    // >
-    bool gt(Rational);
-    // greater or equal than
-    // >=
-    bool geq(Rational);
-*/
 
 
     // Вывести на экран
