@@ -14,9 +14,16 @@ public:
 	Rational& operator=(const Rational&);
 
     Rational operator+(const Rational&);
-    Rational operator-(const Rational&);
+    Rational operator-(Rational&);
     Rational operator*(const Rational&);
-    Rational operator/(const Rational&);
+    Rational operator/(Rational&);
+    
+    bool operator==(const Rational&);
+    bool operator!=(const Rational&);
+    bool operator<(const Rational&);
+    bool operator<=(const Rational&);
+    bool operator>(const Rational&);
+    bool operator>=(const Rational&);
 
     // Сокращение
     Rational reduce();
@@ -25,7 +32,7 @@ public:
     Rational neg();
     // ^-1
     Rational inv();
-
+/*
     Rational sum(Rational);
     Rational sub(Rational);
     Rational mul(Rational);
@@ -47,7 +54,7 @@ public:
     // greater or equal than
     // >=
     bool geq(Rational);
-
+*/
 
 
     // Вывести на экран
