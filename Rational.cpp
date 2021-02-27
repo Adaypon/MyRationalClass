@@ -137,17 +137,8 @@ bool Rational::geq(Rational r) {
  */
 
 void Rational::print() {
-	/*
-	std::cout 
-        << numerator
-        << "/"
-        << denumerator
-        << std::endl;
-	*/
-	
-    if (nan)
-        std::cout << "<NAN>\n"
-        << std::endl;
+	if (nan)
+        std::cout << "<NAN>\n" << std::endl;
     else
         std::cout 
             << numerator
