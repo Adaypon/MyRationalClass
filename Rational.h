@@ -17,7 +17,7 @@ public:
 
     Rational();
     Rational(int, int);
-    Rational(int);
+    explicit Rational(int);
 	
 	Rational(const Rational&);
 	
