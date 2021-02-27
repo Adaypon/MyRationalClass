@@ -1,5 +1,6 @@
 #include "Rational.h"
 #include <iostream>
+#include <cmath>
 
 // НОД
 int gcd(int a, int b) {
@@ -130,13 +131,19 @@ bool Rational::operator>=(const Rational& other) {
 
 // Сокращение
 Rational Rational::reduce() {
-	int del = gcd(numerator, denumerator);
+	int del = abs(gcd(numerator, denumerator));
 	if (del != 1) {
 		return Rational(
 			numerator / del,
 			denumerator / del
 		);
 	}
+    else if (del < 0) {
+        return Rational(
+			numerator,
+			denumerator
+		).neg();
+    }
 	else {
 		return Rational(
 			numerator,
@@ -282,8 +289,9 @@ int main() {
     Rational y;
     x.scan();
     y.scan();
-    Rational c = x / y;
+    Rational c = x + y;
     c.print();
+    c.reduce().print();
 
     return 0;
 }
