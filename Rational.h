@@ -19,8 +19,10 @@ public:
     Rational(int, int);
     explicit Rational(int);
 	
+    // конструктор копирования
 	Rational(const Rational&);
 	
+    // присваивание копирование
 	Rational& operator=(const Rational&);
 
     // Сокращение
