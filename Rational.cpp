@@ -28,7 +28,6 @@ Rational::Rational(const Rational& copy) {
 	this->nan = copy.nan;
 	this->numerator = copy.numerator;
 	this->denumerator = copy.denumerator;
-    nan = (this->denumerator == 0);
 }
 
 Rational& Rational::operator=(const Rational& other) {
@@ -36,7 +35,6 @@ Rational& Rational::operator=(const Rational& other) {
 	std::swap(this->nan, copy.nan);
 	std::swap(this->numerator, copy.numerator);
 	std::swap(this->denumerator, copy.denumerator);
-    nan = (this->denumerator == 0);
 	return *this;
 }
 
@@ -68,11 +66,9 @@ Rational Rational::neg() {
 
 // ^-1
 Rational Rational::inv() {
-    std::swap(numerator, denumerator);
-    nan = (denumerator == 0);
     return Rational(
-        numerator,
-        denumerator
+        denumerator,
+        numerator
     );
 }
 
@@ -81,6 +77,10 @@ Rational Rational::inv() {
  */
 
 Rational Rational::sum(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return *this;
+    }
 	int commonDenumerator = lcm(denumerator, r.denumerator); // общий знаменатель
 	return Rational(
 		numerator * (commonDenumerator / denumerator) + r.numerator * (commonDenumerator / r.denumerator),
@@ -93,6 +93,10 @@ Rational Rational::sub(Rational r) {
 }
 
 Rational Rational::mul(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return *this;
+    }
 	return Rational(
 		numerator * r.numerator,
 		denumerator * r.denumerator
@@ -108,6 +112,10 @@ Rational Rational::div(Rational r) {
  */
 
 bool Rational::eq(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
     return
         numerator * r.denumerator == r.numerator * denumerator;
 }
@@ -117,23 +125,29 @@ bool Rational::neq(Rational r) {
 }
 
 bool Rational::lt(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
     return
         numerator * r.denumerator < r.numerator * denumerator;
 }
 
 bool Rational::leq(Rational r) {
-    return
-        numerator * r.denumerator <= r.numerator * denumerator;
+    return !gt(r);
 }
 
 bool Rational::gt(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
     return
         numerator * r.denumerator > r.numerator * denumerator;
 }
 
 bool Rational::geq(Rational r) {
-    return
-        numerator * r.denumerator >= r.numerator * denumerator;
+    return !lt(r);
 }
 
 /**
@@ -156,6 +170,7 @@ void Rational::scan() {
     std::cin
         >> numerator
         >> denumerator;
+    nan = (denumerator == 0);
 }
 
 bool Rational::isNAN() {
@@ -169,15 +184,12 @@ bool Rational::checkNAN(Rational a, Rational b) {
     return false;
 }
 int main() {
-	
-    Rational x; // 1/1
-    Rational y(10, 5); // 10/5
-    Rational z(7); // 7/1
-    Rational n(1, 0); // 1/0, nan
-	
+    Rational x;
+    Rational y;
+    x.scan();
+    y.scan();
     x.print();
-    y.print();
-    z.print();
-	std::cout << z.isNAN() << std::endl;
-	n.print();
+    x = x.inv();
+    x = x.sum(y);
+    x.print();
 }
