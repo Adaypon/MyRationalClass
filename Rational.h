@@ -53,8 +53,14 @@ public:
     // >=
     bool geq(Rational);
 
+
+
     // Вывести на экран
     void print();
     // Считать с клавиатуры
     void scan();
+    // Возврат переменной nan
+    bool isNAN();
+    // Проверка на NAN
+    bool checkNAN(Rational, Rational);
 };

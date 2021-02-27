@@ -28,6 +28,7 @@ Rational::Rational(const Rational& copy) {
 	this->nan = copy.nan;
 	this->numerator = copy.numerator;
 	this->denumerator = copy.denumerator;
+    nan = (this->denumerator == 0);
 }
 
 Rational& Rational::operator=(const Rational& other) {
@@ -35,6 +36,7 @@ Rational& Rational::operator=(const Rational& other) {
 	std::swap(this->nan, copy.nan);
 	std::swap(this->numerator, copy.numerator);
 	std::swap(this->denumerator, copy.denumerator);
+    nan = (this->denumerator == 0);
 	return *this;
 }
 
@@ -66,14 +68,16 @@ Rational Rational::neg() {
 
 // ^-1
 Rational Rational::inv() {
+    std::swap(numerator, denumerator);
+    nan = (denumerator == 0);
     return Rational(
-        denumerator,
-        numerator
+        numerator,
+        denumerator
     );
 }
 
 /**
- * Арифмитические операции
+ * Арифметические операции
  */
 
 Rational Rational::sum(Rational r) {
@@ -138,7 +142,7 @@ bool Rational::geq(Rational r) {
 
 void Rational::print() {
 	if (nan)
-        std::cout << "<NAN>\n" << std::endl;
+        std::cout << "<NAN>" << std::endl;
     else
         std::cout 
             << numerator
@@ -154,6 +158,16 @@ void Rational::scan() {
         >> denumerator;
 }
 
+bool Rational::isNAN() {
+    return this->nan;
+}
+
+bool Rational::checkNAN(Rational a, Rational b) {
+    if (a.isNAN() || b.isNAN()) {
+        return true;
+    }
+    return false;
+}
 int main() {
 	
     Rational x; // 1/1
@@ -164,6 +178,6 @@ int main() {
     x.print();
     y.print();
     z.print();
-	
-	
+	std::cout << z.isNAN() << std::endl;
+	n.print();
 }
