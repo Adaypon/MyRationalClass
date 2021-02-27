@@ -44,7 +44,7 @@ Rational& Rational::operator=(const Rational& other) {
 Rational Rational::operator+(const Rational& other) {
     if (checkNAN(*this, other)) {
         std::cout << "sum Illegal operation: one of objects is NAN" << std::endl;
-        return *this;
+        return Rational(1, 0); // возврат NAN (стоит ли возвращать что-то другое?)
     }
 	int commonDenumerator = lcm(denumerator, other.denumerator); // общий знаменатель
 	return Rational(
@@ -60,7 +60,7 @@ Rational Rational::operator-(Rational& other) { // нужна ли const Rationa
 Rational Rational::operator*(const Rational& other) {
     if (checkNAN(*this, other)) {
         std::cout << "mul Illegal operation: one of objects is NAN" << std::endl;
-        return *this;
+        return Rational(1, 0); // возврат NAN
     }
     
 	return Rational(
@@ -72,7 +72,7 @@ Rational Rational::operator*(const Rational& other) {
 Rational Rational::operator/(Rational& other) {
     if (checkNAN(*this, other)) {
         std::cout << "div Illegal operation: one of objects is NAN" << std::endl;
-        return *this;
+        return Rational(1, 0); // возврат NAN
     }
 	return (*this * other.inv());
 }
