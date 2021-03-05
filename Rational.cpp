@@ -43,89 +43,48 @@ Rational& Rational::operator=(const Rational& other) {
  */
 
 Rational Rational::operator+(const Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "sum Illegal operation: one of objects is NAN" << std::endl;
-        return Rational(1, 0); // возврат NAN (стоит ли возвращать что-то другое?)
-    }
-	int commonDenumerator = lcm(denumerator, other.denumerator); // общий знаменатель
-	return Rational(
-		numerator * (commonDenumerator / denumerator) + other.numerator * (commonDenumerator / other.denumerator),
-		commonDenumerator
-	);
+    return this->sum(other);
 }
 
-Rational Rational::operator-(Rational& other) { // нужна ли const Rational&, если вызывается neg()?
-    return (*this + other.neg());
+Rational Rational::operator-(const Rational& other) {
+    return this->sub(other);
 }
 
 Rational Rational::operator*(const Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "mul Illegal operation: one of objects is NAN" << std::endl;
-        return Rational(1, 0); // возврат NAN
-    }
-    
-	return Rational(
-		numerator * other.numerator,
-		denumerator * other.denumerator
-	);
+    return this->mul(other);
 }
 
-Rational Rational::operator/(Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "div Illegal operation: one of objects is NAN" << std::endl;
-        return Rational(1, 0); // возврат NAN
-    }
-	return (*this * other.inv());
+Rational Rational::operator/(const Rational& other) {
+    return this->div(other);
 }
 
 
 /**
- * Операции сравнения
+ * Операции сравнения (перегрузки операторов)
  */
 
 bool Rational::operator==(const Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
-        return false;
-    }
-    return
-        numerator * other.denumerator == other.numerator * denumerator;
+    return this->eq(other);
 }
 
 bool Rational::operator!=(const Rational& other) {
-    return !(*this == other);
+    return this->neq(other);
 }
 
 bool Rational::operator<(const Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
-        return false;
-    }
-    if (denumerator == other.denumerator) {
-        return numerator < other.numerator;
-    }
-    return
-        numerator * other.denumerator < other.numerator * denumerator;
+    return this->lt(other);
 }
 
 bool Rational::operator>(const Rational& other) {
-    if (checkNAN(*this, other)) {
-        std::cout << "Illegal comparison: one of objects is NAN" << std::endl;
-        return false;
-    }
-    if (denumerator == other.denumerator) {
-        return numerator > other.numerator;
-    }
-    return
-        numerator * other.denumerator > other.numerator * denumerator;
+    return this->gt(other);
 }
 
 bool Rational::operator<=(const Rational& other) {
-    return !(*this > other);
+    return this->leq(other);
 }
 
 bool Rational::operator>=(const Rational& other) {
-    return !(*this < other);
+    return this->geq(other);
 }
 
 
@@ -168,6 +127,88 @@ Rational Rational::inv() {
     );
 }
 
+/**
+ * арифметические операции
+ */
+
+Rational Rational::sum(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "sum Illegal operation: one of objects is NAN" << std::endl;
+        return Rational(1, 0); // возврат NAN (стоит ли возвращать что-то другое?)
+    }
+    int commonDenumerator = lcm(denumerator, r.denumerator); // общий знаменатель
+	return Rational(
+		numerator * (commonDenumerator / denumerator) + r.numerator * (commonDenumerator / r.denumerator),
+		commonDenumerator
+	);
+}
+
+Rational Rational::sub(Rational r) {
+	return sum(r.neg());
+}
+
+Rational Rational::mul(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "mul Illegal operation: one of objects is NAN" << std::endl;
+        return Rational(1, 0); // возврат NAN
+    }
+    
+	return Rational(
+		numerator * r.numerator,
+		denumerator * r.denumerator
+	);
+}
+
+Rational Rational::div(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "div Illegal operation: one of objects is NAN" << std::endl;
+        return Rational(1, 0); // возврат NAN
+    }
+	return mul(r.inv());
+}
+
+/**
+ * Операции сравнения
+ */
+
+bool Rational::eq(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
+    return
+        numerator * r.denumerator == r.numerator * denumerator;
+}
+
+bool Rational::neq(Rational r) {
+    return !eq(r);
+}
+
+bool Rational::lt(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
+    return
+        numerator * r.denumerator < r.numerator * denumerator;
+}
+
+bool Rational::leq(Rational r) {
+    return !gt(r);
+}
+
+bool Rational::gt(Rational r) {
+    if (checkNAN(*this, r)) {
+        std::cout << "Illegal operation: one of objects is NAN" << std::endl;
+        return false;
+    }
+    return
+        numerator * r.denumerator > r.numerator * denumerator;
+}
+
+bool Rational::geq(Rational r) {
+    return !lt(r);
+}
 
 /**
  * служебные операции
@@ -203,13 +244,12 @@ bool Rational::checkNAN(Rational a, Rational b) {
     return false;
 }
 
-
 int main() {
     Rational x;
     Rational y;
     x.scan();
     y.scan();
-    Rational c = x + y;
+    Rational c = x - y;
     c.print();
     c.reduce().print();
 
