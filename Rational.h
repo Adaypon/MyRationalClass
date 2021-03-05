@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <cmath>
 
 /**
  * Дробь, x/y
@@ -56,9 +58,13 @@ public:
     bool geq(Rational);
 
     // Вывести на экран
-    void print();
+    void print(std::ostream&);
     // Считать с клавиатуры
-    void scan();
+    void scan(std::istream&);
+	// Перегрузки операторов ввода-вывода
+	friend std::ostream& operator<<(std::ostream&, Rational);
+	friend std::istream& operator>>(std::istream&, Rational&);
+    
     // Возврат переменной nan
     bool isNAN();
     // Проверка на NAN

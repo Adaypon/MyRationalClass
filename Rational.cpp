@@ -1,6 +1,4 @@
 #include "Rational.h"
-#include <iostream>
-#include <cmath>
 
 // НОД
 int gcd(int a, int b) {
@@ -214,23 +212,30 @@ bool Rational::geq(Rational r) {
  * служебные операции
  */
 
-void Rational::print() {
+void Rational::print(std::ostream& s = std::cout) {
 	if (nan)
-        std::cout << "<NAN>" << std::endl;
+        s << "<NAN>" << std::endl;
     else
-        std::cout 
-            << numerator
+        s   << numerator
             << "/"
-            << denumerator
-            << std::endl;
+            << denumerator;
 	
 }
 
-void Rational::scan() {
-    std::cin
-        >> numerator
+void Rational::scan(std::istream& s = std::cin) {
+    s   >> numerator
         >> denumerator;
     nan = (denumerator == 0);
+}
+
+std::ostream& operator<<(std::ostream& s, Rational a) {
+	a.print(s);
+	return s;
+}
+
+std::istream& operator>>(std::istream& s, Rational& a) {
+	a.scan(s);
+	return s;
 }
 
 bool Rational::isNAN() {
@@ -247,11 +252,8 @@ bool Rational::checkNAN(Rational a, Rational b) {
 int main() {
     Rational x;
     Rational y;
-    x.scan();
-    y.scan();
-    Rational c = x - y;
-    c.print();
-    c.reduce().print();
+    std::cin >> x >> y;
+    std::cout << (x + y).reduce() << std::endl;
 
     return 0;
 }
