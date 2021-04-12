@@ -85,6 +85,7 @@ bool Rational::operator>=(const Rational& other) {
     return this->geq(other);
 }
 
+// TODO префиксные/постфиксные операторы
 
 // Сокращение
 Rational Rational::reduce() {
